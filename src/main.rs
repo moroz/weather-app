@@ -27,11 +27,14 @@ fn main() {
         let city = env::args().nth(1).unwrap();
         println!("Selected city: {}", city);
         let future = async {
-            let response = match api::get_weather_for_city(&city).await {
-                Ok(weather) => weather,
-                Err(_) => "Failed to fetch weather.".to_string(),
+            match api::get_formatted_weather_for_city(&city).await {
+                Ok(weather) => {
+                    println!("{}", weather);
+                }
+                Err(reason) => {
+                    println!("Failed to fetch weather: {}.", reason);
+                }
             };
-            println!("{}", response);
         };
         rt.block_on(future);
     }
