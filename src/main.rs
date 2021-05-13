@@ -1,3 +1,14 @@
+extern crate dotenv;
+
+pub mod api;
+
+use dotenv::dotenv;
+use std::env;
+
 fn main() {
-    println!("Hello, world!");
+    dotenv().ok();
+
+    for (key, value) in env::vars() {
+        println!("{}: {}", key, value);
+    }
 }
